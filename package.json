@@ -30,7 +30,7 @@
     "release:major": "npm version major && npm run release:publish",
     "release:publish": "git push --follow-tags"
   },
-  "author": "Credit Karma",
+  "author": "Kevin Greene<hightimesteddy@gmail.com>",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

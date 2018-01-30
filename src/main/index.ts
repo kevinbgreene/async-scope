@@ -70,9 +70,17 @@ export class AsyncScope implements IAsyncScope {
 
         asyncHooks.createHook({
             init(asyncId, type, triggerAsyncId, resource) {
-                if (self.asyncMap[triggerAsyncId] !== undefined) {
-                    self.asyncMap[triggerAsyncId].children.push(asyncId)
+                if (self.asyncMap[triggerAsyncId] === undefined) {
+                    self.asyncMap[triggerAsyncId] = {
+                        id: triggerAsyncId,
+                        parentId: -1,
+                        exited: false,
+                        data: {},
+                        children: [],
+                    }
                 }
+
+                self.asyncMap[triggerAsyncId].children.push(asyncId)
 
                 self.asyncMap[asyncId] = {
                     id: asyncId,
