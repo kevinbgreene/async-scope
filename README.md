@@ -5,7 +5,7 @@ Async Scope is a library built on the relatively new Node feature Async Hooks. I
 Let's look at a convoluted example:
 
 ```typescript
-import { asyncScope } from '@creditkarma/async-scope'
+import { asyncScope } from 'async-scope'
 
 setTimeout(() => {
   function childFunction() {
@@ -28,7 +28,7 @@ Think about this in terms of building a service framework where you have a serve
 ## Usage
 
 ```sh
-$ npm install --save @creditkarma/async-scope
+$ npm install --save async-scope
 ```
 
 ### Basic KV Store API
@@ -40,7 +40,7 @@ The Async Scope store supports three operations: `get`, `set` and `delete`.
 Sets a value to be read by the current scope or any child scope.
 
 ```typescript
-import { asyncScope } from '@creditkarma/async-scope'
+import { asyncScope } from 'async-scope'
 
 asyncScope.set('foo', 5)
 ```
@@ -50,7 +50,7 @@ asyncScope.set('foo', 5)
 Read a value from the current scope or any parent scope. It works like the prototype chain. It will return the first value matching the given key it finds by searching the chain (closest parent with matching key).
 
 ```typescript
-import { asyncScope } from '@creditkarma/async-scope'
+import { asyncScope } from 'async-scope'
 
 asyncScope.get('foo')
 ```
@@ -60,7 +60,7 @@ asyncScope.get('foo')
 Remove the given key from the current scope. This is a recursive delete. If there is more than one matching key in the current scope chain then all will be deleted.
 
 ```typescript
-import { asyncScope } from '@creditkarma/async-scope'
+import { asyncScope } from 'async-scope'
 
 asyncScope.delete('foo')
 ```
