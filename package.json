@@ -1,6 +1,6 @@
 {
   "name": "async-scope",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A thread local approximation built on async hooks, written in TypeScript",
   "main": "dist/main/index.js",
   "types": "dist/main/index.d.ts",
