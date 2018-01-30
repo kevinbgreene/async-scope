@@ -1,81 +1,50 @@
 defaults: &defaults
-  working_directory: ~/async-scope
+  working_directory: ~/thrift-server
   docker:
     - image: circleci/node:8.9.4
 
 version: 2
+executorType: machine
 jobs:
-  build:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-npm
-          command: npm install
-      - run:
-          name: build
-          command: npm run build
-      - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory
-          root: ./
-          # Must be relative path from root
-          paths:
-            - dist
-            - LICENSE
-            - package.json
-            - README.md
-
   test:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: install-npm
+          name: Install NPM Dependencies
           command: npm install
       - run:
-          name: npm-test
+          name: Run Test Suite
           command: npm test
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
 
   publish:
     <<: *defaults
     steps:
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ./
+      - checkout
       - run:
-          name: npm-token
+          name: Create .npmrc
           command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
       - run:
-          name: publish-npm
-          command: npm publish --access public
+          name: Install NPM Dependencies
+          command: npm install
+      - run:
+          name: Build Publish Assets
+          command: npm run build
+      - run:
+          name: Publish to NPM
+          command: npm run release:publish
 
 workflows:
   version: 2
-  build_publish:
+  build_test:
       jobs:
         - test:
             filters:
               tags:
                 only: /.*/
-        - build:
-            requires:
-              - test
-            filters:
-              tags:
-                only: /(v)?[0-9]+(\.[0-9]+)*/
-              branches:
-                ignore: /.*/
         - publish:
             requires:
-              - build
+              - test
             filters:
               tags:
                 only: /(v)?[0-9]+(\.[0-9]+)*/
