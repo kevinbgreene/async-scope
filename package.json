@@ -1,0 +1,53 @@
+{
+  "name": "async-scope",
+  "version": "0.0.0",
+  "description": "A thread local approximation built on async hooks, written in TypeScript",
+  "main": "dist/main/index.js",
+  "types": "dist/main/index.d.ts",
+  "files": [
+    "dist/main"
+  ],
+  "keywords": [
+    "TypeScript",
+    "Async Hooks",
+    "Thread Storage",
+    "K/V Store",
+    "Node"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "lint": "tslint --fix './src/**/*.ts'",
+    "prepublish": "npm run build",
+    "prebuild": "npm run clean",
+    "build": "npm run lint && tsc",
+    "watch": "tsc --watch",
+    "pretest": "npm run build",
+    "test": "npm run test:only --",
+    "test:watch": "watch 'npm run test:only' dist",
+    "test:only": "lab --timeout 15000 --verbose -l -S -P spec dist/tests/",
+    "release:patch": "npm version patch && npm run release:publish",
+    "release:minor": "npm version minor && npm run release:publish",
+    "release:major": "npm version major && npm run release:publish",
+    "release:publish": "git push --follow-tags"
+  },
+  "author": "Credit Karma",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinbgreene/async-scope"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/code": "^4.0.3",
+    "@types/lab": "^11.1.0",
+    "@types/node": "^8.0.31",
+    "@types/rimraf": "0.0.28",
+    "code": "^4.1.0",
+    "lab": "^14.2.0",
+    "lerna": "^2.0.0",
+    "rimraf": "^2.5.4",
+    "tslint": "^5.6.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "typescript": "^2.6.2"
+  }
+}

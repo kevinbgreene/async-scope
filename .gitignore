@@ -1,0 +1,12 @@
+# Mac OS
+.DS_Store
+
+# Build files
+dist
+
+# Dependencies
+node_modules
+
+# Temp files
+tmp
+*.tmp
