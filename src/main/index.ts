@@ -119,21 +119,21 @@ export class AsyncScope implements IAsyncScope {
         }).enable()
     }
 
-    public get<T>(key: string): T | null {
+    public get<T>(key: string|symbol): T | null {
         const activeId: number = asyncHooks.executionAsyncId()
-        return recursiveGet<T>(key, activeId, this.asyncMap)
+        return recursiveGet<T>(key as string, activeId, this.asyncMap)
     }
 
-    public set<T>(key: string, value: T): void {
+    public set<T>(key: string|symbol, value: T): void {
         const activeId: number = asyncHooks.executionAsyncId()
         if (this.asyncMap[activeId] !== undefined) {
-            this.asyncMap[activeId].data[key] = value
+            this.asyncMap[activeId].data[key as string] = value
         }
     }
 
-    public delete(key: string): void {
+    public delete(key: string|symbol): void {
         const activeId: number = asyncHooks.executionAsyncId()
-        recursiveDelete(key, activeId, this.asyncMap)
+        recursiveDelete(key as string, activeId, this.asyncMap)
     }
 }
 
